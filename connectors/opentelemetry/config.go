@@ -1,4 +1,4 @@
-package jaeger
+package opentelemetry
 
 type Config struct {
 	URL         string `validate:"required"`

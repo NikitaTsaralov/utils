@@ -1,4 +1,4 @@
-module github.com/NikitaTsaralov/utils/connectors/jaeger
+module github.com/NikitaTsaralov/utils/connectors/opentelemetry
 
 go 1.21.4
 
