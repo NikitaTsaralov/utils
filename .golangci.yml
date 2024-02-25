@@ -23,7 +23,6 @@ linters:
     - gocognit
     - goconst
     - gocritic
-    - godot
     - goimports
     - gomnd
     - lll
@@ -46,13 +45,39 @@ linters:
     - unparam
     - whitespace
     - wsl
-    # - wastedassign - запрещает делать short declare
-    # - gosec
-    # - funlen
-    # - gochecknoglobals
-    # - depguard
-    # - dupl
+    - wastedassign
+    - gosec
+    - funlen
+    - gochecknoglobals
+    - dupl
+    - forbidigo
+    - dogsled
+    - dupl
+    - errcheck
+    - goconst
+    - gocritic
+    - goimports
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - prealloc
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - whitespace
+    # Do not enable:
+    # - staticcheck (does not work with golangci-lint 1.46.2 and go 1.18.2)
+    # - gosec (not worth it in scope of this project)
+    # - gochecknoglobals (we know when it is ok to use globals)
+    # - gochecknoinits (we know when it is ok to use inits)
+    # - godot
     # - exhaustruct
+    # - depguard
 
 linters-settings:
   errcheck:
