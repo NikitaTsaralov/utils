@@ -3,7 +3,6 @@ module github.com/NikitaTsaralov/utils/config
 go 1.21.4
 
 require (
-	github.com/NikitaTsaralov/utils/connectors/logger v0.0.0-20240224192111-a9cd326d8bd8
 	github.com/go-playground/validator/v10 v10.18.0
 	sigs.k8s.io/yaml v1.4.0
 )
