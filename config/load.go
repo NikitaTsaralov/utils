@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/NikitaTsaralov/utils/logger"
-	"github.com/go-playground/validator/v10"
 	"sigs.k8s.io/yaml"
 )
 
