@@ -1,4 +1,4 @@
-package jaeger
+package otel
 
 import (
 	"fmt"
