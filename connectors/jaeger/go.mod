@@ -1,4 +1,4 @@
-module github.com/NikitaTsaralov/utils/connectors/otel-jeager
+module github.com/NikitaTsaralov/utils/connectors/jeager
 
 go 1.21.4
 
