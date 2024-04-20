@@ -1,4 +1,4 @@
-package kafka
+package kafka_connector
 
 import "github.com/twmb/franz-go/pkg/kgo"
 

@@ -1,4 +1,4 @@
-package trace
+package jaeger_connector
 
 import (
 	"fmt"

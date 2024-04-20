@@ -1,4 +1,4 @@
-package trace
+package jaeger_connector
 
 type Config struct {
 	URL         string `validate:"required"`

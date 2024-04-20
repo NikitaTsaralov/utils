@@ -1,4 +1,4 @@
-package kafka
+package kafka_connector
 
 type Config struct {
 	Host          string
