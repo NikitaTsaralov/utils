@@ -1,4 +1,4 @@
-module github.com/NikitaTsaralov/utils/utils/otel
+module github.com/NikitaTsaralov/utils/utils/trace
 
 go 1.21.4
 
