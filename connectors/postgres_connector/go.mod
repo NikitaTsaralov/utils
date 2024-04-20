@@ -1,4 +1,4 @@
-module github.com/NikitaTsaralov/utils/connectors/postgres
+module github.com/NikitaTsaralov/utils/connectors/postgres-connector
 
 go 1.21.4
 

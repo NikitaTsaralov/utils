@@ -1,4 +1,4 @@
-module github.com/NikitaTsaralov/utils/connectors/trace
+module github.com/NikitaTsaralov/utils/connectors/jeager-connector
 
 go 1.21.4
 
