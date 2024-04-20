@@ -1,4 +1,4 @@
-package opentelemetry
+package trace
 
 type Config struct {
 	URL         string `validate:"required"`

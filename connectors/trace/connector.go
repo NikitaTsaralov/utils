@@ -1,15 +1,24 @@
-package opentelemetry
+package trace
 
 import (
+	"context"
 	"fmt"
+	"log/slog"
+	"os"
 
+	"github.com/go-logr/logr"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
-	"go.opentelemetry.io/otel/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 )
+
+type Trace struct {
+	exporter *jaeger.Exporter
+	provider *tracesdk.TracerProvider
+}
 
 func NewJaegerExporter(c Config) (*jaeger.Exporter, error) {
 	exporter, err := jaeger.New(
@@ -45,18 +54,40 @@ func NewTraceProvider(exp tracesdk.SpanExporter, serviceName string) (*tracesdk.
 	), nil
 }
 
-func InitTracer(c Config) (trace.Tracer, error) {
+func Start(c Config) (*Trace, error) {
 	exporter, err := NewJaegerExporter(c)
 	if err != nil {
 		return nil, fmt.Errorf("initialize exporter: %w", err)
 	}
 
-	tp, err := NewTraceProvider(exporter, c.ServiceName)
+	provider, err := NewTraceProvider(exporter, c.ServiceName)
 	if err != nil {
 		return nil, fmt.Errorf("initialize provider: %w", err)
 	}
 
-	otel.SetTracerProvider(tp) // !!!!!!!!!!!
+	otel.SetTracerProvider(provider)
+	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(
+		propagation.TraceContext{},
+		propagation.Baggage{},
+	))
+	otel.SetLogger(logr.FromSlogHandler(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug})))
 
-	return tp.Tracer(c.TracerName), nil
+	return &Trace{
+		exporter: exporter,
+		provider: provider,
+	}, nil
+}
+
+func (t *Trace) Stop(ctx context.Context) error {
+	err := t.exporter.Shutdown(ctx)
+	if err != nil {
+		return err
+	}
+
+	err = t.provider.Shutdown(ctx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
