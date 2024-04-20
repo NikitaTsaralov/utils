@@ -1,4 +1,4 @@
-package postgres_connector
+package postgres
 
 import (
 	"time"

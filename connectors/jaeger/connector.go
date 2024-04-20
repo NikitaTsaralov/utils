@@ -1,4 +1,4 @@
-package jaeger_connector
+package jaeger
 
 import (
 	"context"
