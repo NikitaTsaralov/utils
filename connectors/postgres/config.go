@@ -12,10 +12,12 @@ type Config struct {
 	DBName   string `validate:"required"`
 	SSLMode  string `validate:"required"`
 	Driver   string `validate:"required"`
-	Settings struct {
-		MaxOpenConns    int           `validate:"required,min=1"`
-		ConnMaxLifetime time.Duration `validate:"required,min=1"`
-		MaxIdleConns    int           `validate:"required,min=1"`
-		ConnMaxIdleTime time.Duration `validate:"required,min=1"`
-	}
+	Settings Settings
+}
+
+type Settings struct {
+	MaxOpenConns    int           `validate:"required,min=1"`
+	ConnMaxLifetime time.Duration `validate:"required,min=1"`
+	MaxIdleConns    int           `validate:"required,min=1"`
+	ConnMaxIdleTime time.Duration `validate:"required,min=1"`
 }
