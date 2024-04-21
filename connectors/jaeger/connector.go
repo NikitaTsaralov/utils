@@ -2,10 +2,10 @@ package jaeger
 
 import (
 	"context"
-	"fmt"
 	"log/slog"
 	"os"
 
+	"github.com/NikitaTsaralov/utils/logger"
 	"github.com/go-logr/logr"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/jaeger"
@@ -54,15 +54,15 @@ func NewTraceProvider(exp tracesdk.SpanExporter, serviceName string) (*tracesdk.
 	), nil
 }
 
-func Start(c Config) (*Trace, error) {
+func Start(c Config) *Trace {
 	exporter, err := NewJaegerExporter(c)
 	if err != nil {
-		return nil, fmt.Errorf("initialize exporter: %w", err)
+		logger.Fatalf("can't create jaeger exporter: %v", err)
 	}
 
 	provider, err := NewTraceProvider(exporter, c.ServiceName)
 	if err != nil {
-		return nil, fmt.Errorf("initialize provider: %w", err)
+		logger.Fatalf("can't create trace provider: %v", err)
 	}
 
 	otel.SetTracerProvider(provider)
@@ -75,18 +75,18 @@ func Start(c Config) (*Trace, error) {
 	return &Trace{
 		exporter: exporter,
 		provider: provider,
-	}, nil
+	}
 }
 
 func (t *Trace) Stop(ctx context.Context) error {
 	err := t.exporter.Shutdown(ctx)
 	if err != nil {
-		return err
+		logger.Errorf("can't shutdown jaeger exporter: %v", err)
 	}
 
 	err = t.provider.Shutdown(ctx)
 	if err != nil {
-		return err
+		logger.Errorf("can't shutdown trace provider: %v", err)
 	}
 
 	return nil

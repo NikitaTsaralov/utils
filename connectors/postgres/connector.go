@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/NikitaTsaralov/utils/logger"
 	"github.com/jmoiron/sqlx"
 )
 
 // New returns new Postgresql db instance with sqlx driver.
-func New(c Config) (*sqlx.DB, error) {
+func New(c Config) *sqlx.DB {
 	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=%s password=%s",
 		c.Host,
 		c.Port,
@@ -20,7 +21,7 @@ func New(c Config) (*sqlx.DB, error) {
 
 	db, err := sqlx.Connect(c.Driver, dataSourceName)
 	if err != nil {
-		return nil, err
+		logger.Fatalf("can't connect to postgres: %v", err)
 	}
 
 	db.SetMaxOpenConns(c.Settings.MaxOpenConns)
@@ -28,5 +29,5 @@ func New(c Config) (*sqlx.DB, error) {
 	db.SetMaxIdleConns(c.Settings.MaxIdleConns)
 	db.SetConnMaxIdleTime(c.Settings.ConnMaxIdleTime * time.Second)
 
-	return db, nil
+	return db
 }
