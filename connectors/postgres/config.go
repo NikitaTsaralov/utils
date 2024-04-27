@@ -17,7 +17,7 @@ type Config struct {
 
 type Settings struct {
 	MaxOpenConns    int           `validate:"min=1,default=25"`
-	ConnMaxLifetime time.Duration `validate:"min=1,default=300"`
+	ConnMaxLifetime time.Duration `validate:"min=1,default=5m"`
 	MaxIdleConns    int           `validate:"min=1,default=25"`
-	ConnMaxIdleTime time.Duration `validate:"min=1,default=300"`
+	ConnMaxIdleTime time.Duration `validate:"min=1,default=5m"`
 }

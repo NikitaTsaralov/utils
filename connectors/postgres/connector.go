@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/NikitaTsaralov/utils/logger"
 	_ "github.com/jackc/pgx/v5/stdlib"
@@ -26,9 +25,9 @@ func New(c Config) *sqlx.DB {
 	}
 
 	db.SetMaxOpenConns(c.Settings.MaxOpenConns)
-	db.SetConnMaxLifetime(c.Settings.ConnMaxLifetime * time.Second)
+	db.SetConnMaxLifetime(c.Settings.ConnMaxLifetime)
 	db.SetMaxIdleConns(c.Settings.MaxIdleConns)
-	db.SetConnMaxIdleTime(c.Settings.ConnMaxIdleTime * time.Second)
+	db.SetConnMaxIdleTime(c.Settings.ConnMaxIdleTime)
 
 	return db
 }
