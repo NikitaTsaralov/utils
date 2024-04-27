@@ -6,7 +6,7 @@ import (
 
 type Config struct {
 	Host     string `validate:"default=localhost"`
-	Port     string `validate:"default=5432"`
+	Port     int    `validate:"default=5432"`
 	User     string `validate:"default=root"`
 	Password string `validate:"required"`
 	DBName   string `validate:"default=postgres"`

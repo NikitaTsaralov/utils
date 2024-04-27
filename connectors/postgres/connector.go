@@ -10,7 +10,7 @@ import (
 
 // New returns new Postgresql db instance with sqlx driver.
 func New(c Config) *sqlx.DB {
-	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=%s password=%s",
+	dataSourceName := fmt.Sprintf("host=%s port=%d user=%s dbname=%s sslmode=%s password=%s",
 		c.Host,
 		c.Port,
 		c.User,
