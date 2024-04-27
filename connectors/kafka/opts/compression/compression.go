@@ -5,16 +5,16 @@ import (
 )
 
 type (
-	CompressionType  int64
+	CompressionType  string
 	CompressionTypes []CompressionType
 )
 
 const (
-	NoneCompression CompressionType = iota
-	GzipCompression
-	SnappyCompression
-	Lz4Compression
-	ZstdCompression
+	NoneCompression   CompressionType = "none"
+	GzipCompression                   = "gzip"
+	SnappyCompression                 = "snappy"
+	Lz4Compression                    = "lz4"
+	ZstdCompression                   = "zstd"
 )
 
 func Parse(compressionTypes CompressionTypes) kgo.Opt {

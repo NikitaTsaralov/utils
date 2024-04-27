@@ -4,12 +4,12 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 
-type AckType int64
+type AckType string
 
 const (
-	AllAck AckType = iota
-	LeaderAck
-	NoAck
+	AllAck    AckType = "all"
+	LeaderAck         = "leader"
+	NoAck             = "none"
 )
 
 func Parse(ackPolicy AckType) kgo.Opt {

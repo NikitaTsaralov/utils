@@ -13,8 +13,8 @@ type ConsumerConfig struct {
 	DisableAutocommit    bool
 	BlockRebalanceOnPoll bool
 
-	FetchMinBytes     int32         `validate:"default=1"`
-	FetchMaxBytes     int32         `validate:"default=400"`
-	HeartbeatInterval time.Duration `validate:"default=3000"`
-	Balancers         []consumer_group_balancer.BalancerType
+	FetchMinBytes     int32                                  `validate:"default=1"`
+	FetchMaxBytes     int32                                  `validate:"default=400"`
+	HeartbeatInterval time.Duration                          `validate:"default=3000"`
+	Balancers         []consumer_group_balancer.BalancerType `validate:"default=cooperative_sticky"`
 }

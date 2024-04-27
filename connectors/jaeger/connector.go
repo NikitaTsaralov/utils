@@ -21,13 +21,16 @@ type Trace struct {
 }
 
 func NewJaegerExporter(c Config) (*jaeger.Exporter, error) {
-	exporter, err := jaeger.New(
-		jaeger.WithCollectorEndpoint(
-			jaeger.WithEndpoint(c.URL),
-			jaeger.WithPassword(c.Password),
-			jaeger.WithUsername(c.Username),
-		),
-	)
+	opts := []jaeger.CollectorEndpointOption{
+		jaeger.WithEndpoint(c.URL),
+	}
+
+	if c.Username != "" && c.Password != "" {
+		opts = append(opts, jaeger.WithUsername(c.Username))
+		opts = append(opts, jaeger.WithPassword(c.Password))
+	}
+
+	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(opts...))
 	if err != nil {
 		return nil, err
 	}

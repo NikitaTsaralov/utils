@@ -9,8 +9,8 @@ import (
 
 type ProducerConfig struct {
 	kafka.CommonConfig
-	ProducerPartitioner partitioner.PartitionerType
-	RequireAcks         ack_policy.AckType
-	Compression         []compression.CompressionType
-	RecordRetries       int `validate:"default=9223372036854775807"`
+	ProducerPartitioner partitioner.PartitionerType   `validate:"default=uniform_bytes"`
+	RequireAcks         ack_policy.AckType            `validate:"default=leader"`
+	Compression         []compression.CompressionType `validate:"default=snappy,none"`
+	RecordRetries       int                           `validate:"default=9223372036854775807"`
 }

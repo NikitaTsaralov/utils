@@ -4,15 +4,15 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 
-type PartitionerType int64
+type PartitionerType string
 
 const (
-	UniformBytes PartitionerType = iota
-	LeastBackup
-	Manual
-	RoundRobin
-	StickyKey
-	Sticky
+	UniformBytes PartitionerType = "uniform_bytes"
+	LeastBackup                  = "least_backup"
+	Manual                       = "manual"
+	RoundRobin                   = "round_robin"
+	StickyKey                    = "sticky_key"
+	Sticky                       = "sticky"
 )
 
 func Parse(partitioner PartitionerType) kgo.Opt {

@@ -5,15 +5,15 @@ import (
 )
 
 type (
-	BalancerType  int64
+	BalancerType  string
 	BalancerTypes []BalancerType
 )
 
 const (
-	CooperativeStickyBalancer BalancerType = iota
-	RoundRobinBalancer
-	RangeBalancer
-	StickyBalancer
+	CooperativeStickyBalancer BalancerType = "cooperative_sticky"
+	RoundRobinBalancer                     = "round_robin"
+	RangeBalancer                          = "range"
+	StickyBalancer                         = "sticky"
 )
 
 func Parse(balancers BalancerTypes) kgo.Opt {
