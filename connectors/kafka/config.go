@@ -30,28 +30,68 @@ type Metrics struct {
 }
 
 type Timeout struct {
-	Dial               time.Duration `validate:"default=10s"`
-	ConnIdle           time.Duration `validate:"default=20s"`
-	RequestOverhead    time.Duration `validate:"default=10s"`
-	Rebalance          time.Duration `validate:"default=60000ms"`
-	Retry              time.Duration `validate:"default=45s"`
-	Session            time.Duration `validate:"default=45s"`
-	ProduceRequest     time.Duration `validate:"default=45s"`
-	RecordDelivery     time.Duration `validate:"default=10s"`
-	TransactionTimeout time.Duration `validate:"default=40s"`
+	Dial               time.Duration
+	ConnIdle           time.Duration
+	RequestOverhead    time.Duration
+	Rebalance          time.Duration
+	Retry              time.Duration
+	Session            time.Duration
+	ProduceRequest     time.Duration
+	RecordDelivery     time.Duration
+	TransactionTimeout time.Duration
+}
+
+func (t *Timeout) FillWithDefaults() {
+	if t.Dial == 0 {
+		t.Dial = 10000
+	}
+
+	if t.ConnIdle == 0 {
+		t.ConnIdle = 20000
+	}
+
+	if t.RequestOverhead == 0 {
+		t.RequestOverhead = 10000
+	}
+
+	if t.Rebalance == 0 {
+		t.Rebalance = 60000
+	}
+
+	if t.Retry == 0 {
+		t.Retry = 45000
+	}
+
+	if t.Session == 0 {
+		t.Session = 45000
+	}
+
+	if t.ProduceRequest == 0 {
+		t.ProduceRequest = 45000
+	}
+
+	if t.RecordDelivery == 0 {
+		t.RecordDelivery = 10000
+	}
+
+	if t.TransactionTimeout == 0 {
+		t.TransactionTimeout = 40000
+	}
 }
 
 func (t *Timeout) ToOpt() []kgo.Opt {
+	t.FillWithDefaults()
+
 	return []kgo.Opt{
-		kgo.DialTimeout(t.Dial),
-		kgo.ConnIdleTimeout(t.ConnIdle),
-		kgo.RequestTimeoutOverhead(t.RequestOverhead),
-		kgo.RebalanceTimeout(t.Rebalance),
-		kgo.RetryTimeout(t.Retry),
-		kgo.SessionTimeout(t.Session),
-		kgo.ProduceRequestTimeout(t.ProduceRequest),
-		kgo.RecordDeliveryTimeout(t.RecordDelivery),
-		kgo.TransactionTimeout(t.TransactionTimeout),
+		kgo.DialTimeout(t.Dial * time.Millisecond),
+		kgo.ConnIdleTimeout(t.ConnIdle * time.Millisecond),
+		kgo.RequestTimeoutOverhead(t.RequestOverhead * time.Millisecond),
+		kgo.RebalanceTimeout(t.Rebalance * time.Millisecond),
+		kgo.RetryTimeout(t.Retry * time.Millisecond),
+		kgo.SessionTimeout(t.Session * time.Millisecond),
+		kgo.ProduceRequestTimeout(t.ProduceRequest * time.Millisecond),
+		kgo.RecordDeliveryTimeout(t.RecordDelivery * time.Millisecond),
+		kgo.TransactionTimeout(t.TransactionTimeout * time.Millisecond),
 	}
 }
 
@@ -62,6 +102,10 @@ type CommonConfig struct {
 	TLS     TLS
 	Metrics Metrics
 	Timeout Timeout
+}
+
+func (c *CommonConfig) FillWithDefaults() {
+	c.Timeout.FillWithDefaults()
 }
 
 func (c *CommonConfig) ToOpt(

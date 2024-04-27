@@ -11,12 +11,19 @@ import (
 
 // New returns new Postgresql db instance with sqlx driver.
 func New(c Config) *sqlx.DB {
+	c.FillWithDefaults()
+
+	sslMode := "disable"
+	if c.SSLModeEnabled {
+		sslMode = "enable"
+	}
+
 	dataSourceName := fmt.Sprintf("host=%s port=%d user=%s dbname=%s sslmode=%s password=%s",
 		c.Host,
 		c.Port,
 		c.User,
 		c.DBName,
-		c.SSLModeEnabled,
+		sslMode,
 		c.Password,
 	)
 

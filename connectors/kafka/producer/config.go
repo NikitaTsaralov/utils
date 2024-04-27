@@ -9,8 +9,28 @@ import (
 
 type ProducerConfig struct {
 	kafka.CommonConfig
-	ProducerPartitioner partitioner.PartitionerType   `validate:"default=uniform_bytes"`
-	RequireAcks         ack_policy.AckType            `validate:"default=leader"`
-	Compression         []compression.CompressionType `validate:"default=snappy,none"`
-	RecordRetries       int                           `validate:"default=9223372036854775807"`
+	ProducerPartitioner partitioner.PartitionerType
+	RequireAcks         ack_policy.AckType
+	Compression         compression.CompressionTypes
+	RecordRetries       int
+}
+
+func (c *ProducerConfig) FillWithDefaults() {
+	c.CommonConfig.FillWithDefaults()
+
+	if c.ProducerPartitioner == "" {
+		c.ProducerPartitioner = "uniform_bytes"
+	}
+
+	if c.RequireAcks == "" {
+		c.RequireAcks = "leader"
+	}
+
+	if c.Compression == nil {
+		c.Compression = compression.CompressionTypes{compression.SnappyCompression, compression.NoneCompression}
+	}
+
+	if c.RecordRetries == 0 {
+		c.RecordRetries = 9223372036854775807
+	}
 }

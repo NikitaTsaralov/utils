@@ -13,6 +13,8 @@ type Consumer struct {
 }
 
 func NewConsumer(c ConsumerConfig, registerer prometheus.Registerer) *Consumer {
+	c.FillWithDefaults()
+
 	kotelTracer := kotel.NewTracer()
 	kotelOpts := []kotel.Opt{kotel.WithTracer(kotelTracer)}
 	kotel := kotel.NewKotel(kotelOpts...)

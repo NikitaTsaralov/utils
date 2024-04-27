@@ -15,6 +15,8 @@ type Producer struct {
 }
 
 func NewProducer(c ProducerConfig, registerer prometheus.Registerer) *Producer {
+	c.FillWithDefaults()
+
 	// Use global trace provider and propagators
 	kotelTracer := kotel.NewTracer()
 	kotelOpts := []kotel.Opt{kotel.WithTracer(kotelTracer)}

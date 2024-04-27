@@ -13,8 +13,30 @@ type ConsumerConfig struct {
 	DisableAutocommit    bool
 	BlockRebalanceOnPoll bool
 
-	FetchMinBytes     int32                                  `validate:"default=1"`
-	FetchMaxBytes     int32                                  `validate:"default=400"`
-	HeartbeatInterval time.Duration                          `validate:"default=3000"`
-	Balancers         []consumer_group_balancer.BalancerType `validate:"default=cooperative_sticky"`
+	FetchMinBytes     int32
+	FetchMaxBytes     int32
+	HeartbeatInterval time.Duration
+	Balancers         consumer_group_balancer.BalancerTypes
+}
+
+func (c *ConsumerConfig) FillWithDefaults() {
+	c.CommonConfig.FillWithDefaults()
+
+	if c.FetchMinBytes == 0 {
+		c.FetchMinBytes = 1
+	}
+
+	if c.FetchMaxBytes == 0 {
+		c.FetchMaxBytes = 400
+	}
+
+	if c.HeartbeatInterval == 0 {
+		c.HeartbeatInterval = 3000
+	}
+
+	if c.Balancers == nil {
+		c.Balancers = consumer_group_balancer.BalancerTypes{
+			consumer_group_balancer.CooperativeStickyBalancer,
+		}
+	}
 }
