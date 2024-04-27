@@ -5,14 +5,14 @@ import (
 )
 
 type Config struct {
-	Host     string `validate:"default=localhost"`
-	Port     int    `validate:"default=5432"`
-	User     string `validate:"default=root"`
-	Password string `validate:"required"`
-	DBName   string `validate:"default=postgres"`
-	SSLMode  bool
-	Driver   string `validate:"default=pgx"`
-	Settings Settings
+	Host           string `validate:"default=localhost"`
+	Port           int    `validate:"default=5432"`
+	User           string `validate:"default=root"`
+	Password       string `validate:"required"`
+	DBName         string `validate:"default=postgres"`
+	SSLModeEnabled bool
+	Driver         string `validate:"default=pgx"`
+	Settings       Settings
 }
 
 type Settings struct {

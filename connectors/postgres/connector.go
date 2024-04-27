@@ -15,7 +15,7 @@ func New(c Config) *sqlx.DB {
 		c.Port,
 		c.User,
 		c.DBName,
-		c.SSLMode,
+		c.SSLModeEnabled,
 		c.Password,
 	)
 
