@@ -9,8 +9,8 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// New returns new Postgresql db instance with sqlx driver.
-func New(c Config) *sqlx.DB {
+// Start returns new Postgresql db instance with sqlx driver.
+func Start(c Config) *sqlx.DB {
 	c.FillWithDefaults()
 
 	sslMode := "disable"
