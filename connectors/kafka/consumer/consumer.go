@@ -2,7 +2,6 @@ package consumer
 
 import (
 	"github.com/NikitaTsaralov/utils/connectors/kafka/opts/consumer_group_balancer"
-	"github.com/NikitaTsaralov/utils/logger"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/twmb/franz-go/pkg/kgo"
 	"github.com/twmb/franz-go/plugin/kotel"
@@ -12,7 +11,7 @@ type Consumer struct {
 	*kgo.Client
 }
 
-func NewConsumer(c ConsumerConfig, registerer prometheus.Registerer) *Consumer {
+func NewConsumer(c ConsumerConfig, registerer prometheus.Registerer) (*Consumer, error) {
 	c.FillWithDefaults()
 
 	kotelTracer := kotel.NewTracer()
@@ -39,8 +38,8 @@ func NewConsumer(c ConsumerConfig, registerer prometheus.Registerer) *Consumer {
 
 	client, err := kgo.NewClient(opts...)
 	if err != nil {
-		logger.Fatalf("can't create kafka consumer: %v", err)
+		return nil, err
 	}
 
-	return &Consumer{client}
+	return &Consumer{client}, nil
 }

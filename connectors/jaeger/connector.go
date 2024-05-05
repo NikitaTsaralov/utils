@@ -57,15 +57,15 @@ func NewTraceProvider(exp tracesdk.SpanExporter, serviceName string) (*tracesdk.
 	), nil
 }
 
-func Start(c Config) *Trace {
+func Start(c Config) (*Trace, error) {
 	exporter, err := NewJaegerExporter(c)
 	if err != nil {
-		logger.Fatalf("can't create jaeger exporter: %v", err)
+		return nil, err
 	}
 
 	provider, err := NewTraceProvider(exporter, c.ServiceName)
 	if err != nil {
-		logger.Fatalf("can't create trace provider: %v", err)
+		return nil, err
 	}
 
 	otel.SetTracerProvider(provider)
@@ -78,7 +78,7 @@ func Start(c Config) *Trace {
 	return &Trace{
 		exporter: exporter,
 		provider: provider,
-	}
+	}, nil
 }
 
 func (t *Trace) Stop(ctx context.Context) error {

@@ -12,10 +12,11 @@ type TraceSuite struct {
 }
 
 func (s *TraceSuite) TestStartStop() {
-	trace := Start(Config{
+	trace, err := Start(Config{
 		URL:         "http://localhost:14268/api/traces",
 		ServiceName: "test",
 	})
+	s.Require().Nil(err)
 
 	defer func(trace *Trace, ctx context.Context) {
 		err := trace.Stop(ctx)

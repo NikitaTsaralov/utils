@@ -12,9 +12,10 @@ type TraceSuite struct {
 }
 
 func (s *TraceSuite) TestStartStop() {
-	db := Start(Config{
+	db, err := Start(Config{
 		Password: "dev",
 	})
+	s.Require().Nil(err)
 
 	defer func(db *sqlx.DB) {
 		err := db.Close()

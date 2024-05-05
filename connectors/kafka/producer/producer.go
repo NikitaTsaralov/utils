@@ -4,7 +4,6 @@ import (
 	"github.com/NikitaTsaralov/utils/connectors/kafka/opts/ack_policy"
 	"github.com/NikitaTsaralov/utils/connectors/kafka/opts/compression"
 	"github.com/NikitaTsaralov/utils/connectors/kafka/opts/partitioner"
-	"github.com/NikitaTsaralov/utils/logger"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/twmb/franz-go/pkg/kgo"
 	"github.com/twmb/franz-go/plugin/kotel"
@@ -14,7 +13,7 @@ type Producer struct {
 	*kgo.Client
 }
 
-func NewProducer(c ProducerConfig, registerer prometheus.Registerer) *Producer {
+func NewProducer(c ProducerConfig, registerer prometheus.Registerer) (*Producer, error) {
 	c.FillWithDefaults()
 
 	// Use global trace provider and propagators
@@ -33,8 +32,8 @@ func NewProducer(c ProducerConfig, registerer prometheus.Registerer) *Producer {
 
 	client, err := kgo.NewClient(opts...)
 	if err != nil {
-		logger.Fatalf("can't create kafka producer: %v", err)
+		return nil, err
 	}
 
-	return &Producer{client}
+	return &Producer{client}, nil
 }
