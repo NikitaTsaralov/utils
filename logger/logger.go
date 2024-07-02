@@ -67,6 +67,10 @@ func init() {
 	Instance.Infof("Logger initialized with level: %s", level)
 }
 
+func Logger() *zap.SugaredLogger {
+	return Instance
+}
+
 func Debug(ctx context.Context, args ...any) {
 	Instance.With(ctx).Debug(args...)
 }
