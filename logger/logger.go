@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"context"
 	"os"
 	"strings"
 	"time"
@@ -66,50 +67,50 @@ func init() {
 	Instance.Infof("Logger initialized with level: %s", level)
 }
 
-func Debug(args ...any) {
-	Instance.Debug(args...)
+func Debug(ctx context.Context, args ...any) {
+	Instance.With(ctx).Debug(args...)
 }
 
-func Info(args ...any) {
-	Instance.Info(args...)
+func Info(ctx context.Context, args ...any) {
+	Instance.With(ctx).Info(args...)
 }
 
-func Warn(args ...any) {
-	Instance.Warn(args...)
+func Warn(ctx context.Context, args ...any) {
+	Instance.With(ctx).Warn(args...)
 }
 
-func Error(args ...any) {
-	Instance.Error(args...)
+func Error(ctx context.Context, args ...any) {
+	Instance.With(ctx).Error(args...)
 }
 
-func Panic(args ...any) {
-	Instance.Panic(args...)
+func Panic(ctx context.Context, args ...any) {
+	Instance.With(ctx).Panic(args...)
 }
 
-func Fatal(args ...any) {
-	Instance.Fatal(args...)
+func Fatal(ctx context.Context, args ...any) {
+	Instance.With(ctx).Fatal(args...)
 }
 
-func Debugf(template string, args ...any) {
-	Instance.Debugf(template, args...)
+func Debugf(ctx context.Context, template string, args ...any) {
+	Instance.With(ctx).Debugf(template, args...)
 }
 
-func Infof(template string, args ...any) {
-	Instance.Infof(template, args...)
+func Infof(ctx context.Context, template string, args ...any) {
+	Instance.With(ctx).Infof(template, args...)
 }
 
-func Warnf(template string, args ...any) {
-	Instance.Warnf(template, args...)
+func Warnf(ctx context.Context, template string, args ...any) {
+	Instance.With(ctx).With(ctx).Warnf(template, args...)
 }
 
-func Errorf(template string, args ...any) {
-	Instance.Errorf(template, args...)
+func Errorf(ctx context.Context, template string, args ...any) {
+	Instance.With(ctx).With(ctx).Errorf(template, args...)
 }
 
-func Panicf(template string, args ...any) {
-	Instance.Panicf(template, args...)
+func Panicf(ctx context.Context, template string, args ...any) {
+	Instance.With(ctx).Panicf(template, args...)
 }
 
-func Fatalf(template string, args ...any) {
-	Instance.Fatalf(template, args...)
+func Fatalf(ctx context.Context, template string, args ...any) {
+	Instance.With(ctx).Fatalf(template, args...)
 }
