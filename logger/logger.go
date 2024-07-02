@@ -67,6 +67,11 @@ func init() {
 	Instance.Infof("Logger initialized with level: %s", level)
 }
 
+func SetLevel(level zapcore.Level) {
+	Level.SetLevel(level)
+	Instance.Infof("Logger level set to: %s", level)
+}
+
 func Logger() *zap.SugaredLogger {
 	return Instance
 }
